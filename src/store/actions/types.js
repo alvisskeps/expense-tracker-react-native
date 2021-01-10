@@ -1,2 +1,2 @@
-export const ADD_TRANSACTION = '';
-export const DELETE_TRANSACTION = '';
+export const ADD_TRANSACTION = 'addTransaction';
+export const DELETE_TRANSACTION = 'deleteTransaction';

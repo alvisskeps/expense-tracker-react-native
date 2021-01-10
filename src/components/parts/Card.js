@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {Button} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';

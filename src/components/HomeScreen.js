@@ -4,9 +4,11 @@ import {Container, CheckBox, Body, Right, ListItem} from 'native-base';
 import Animated from 'react-native-reanimated';
 import Card from './parts/Card';
 import Empty from './parts/Empty';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {deleteTransaction} from '../store/actions/transactionActions';
 
 function Item({title, id, price}) {
+  const dispatch = useDispatch();
 
   return (
     <View
@@ -17,6 +19,9 @@ function Item({title, id, price}) {
       }}>
       <ListItem>
         <CheckBox
+          onPress={() => {
+            dispatch(deleteTransaction(id));
+          }}
           color="#ff4500"
         />
 
@@ -47,12 +52,13 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <Container>
-      <Animated.View style = {{
-        flex: 1,
-        alignItems: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 20
-      }}>
+      <Animated.View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+        }}>
         <Card navigation={navigation} />
       </Animated.View>
 
@@ -72,15 +78,5 @@ const HomeScreen = ({navigation}) => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  Box: {
-    width: '100%',
-    height: 200,
-    borderRadius: 15,
-    flexDirection: 'row',
-    padding: 22,
-  }
-});
 
 export default HomeScreen;
