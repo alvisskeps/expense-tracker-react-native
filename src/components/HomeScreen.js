@@ -1,10 +1,50 @@
-import React from 'react'
-import {View, Text, StyleSheet, FlatList} from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import {Button, Container, CheckBox, Body, Right} from 'native-base'
-import Animated from 'react-native-reanimated'
+import React from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {Container, CheckBox, Body, Right, ListItem} from 'native-base';
+import Animated from 'react-native-reanimated';
+import Card from './parts/Card';
+import Empty from './parts/Empty';
+import {useSelector} from 'react-redux';
 
-function HomeScreen({navigation}) {
+function Item({title, id, price}) {
+
+  return (
+    <View
+      style={{
+        marginVertical: 3,
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+      }}>
+      <ListItem>
+        <CheckBox
+          color="#ff4500"
+        />
+
+        <Body>
+          <Text style={{fontSize: 17, fontWeight: '700', marginLeft: 10}}>
+            {title}
+          </Text>
+        </Body>
+
+        <Right>
+          <Text
+            style={{
+              fontFamily: 'Lato-Bold',
+              fontSize: 14,
+              fontWeight: '400',
+              color: price > 0 ? '#009BFC' : '#ff4500',
+            }}>
+            {price > 0 ? `€${price}` : `- €${Math.abs(price)}`}
+          </Text>
+        </Right>
+      </ListItem>
+    </View>
+  );
+}
+
+const HomeScreen = ({navigation}) => {
+  const {transactions} = useSelector((state) => state.transactions);
+
   return (
     <Container>
       <Animated.View style = {{
@@ -13,91 +53,22 @@ function HomeScreen({navigation}) {
         paddingVertical: 10,
         paddingHorizontal: 20
       }}>
-        <LinearGradient
-          colors={['#FAAD3D', '#EFC90A', '#F1CB0C']}
-          style={styles.Box}>
-          <View style={{width: '70%', alignItems: 'flex-start'}}>
-            <Text
-              style={{
-                fontSize: 15,
-                color: '#fff',
-                fontFamily: 'Lato-Regular',
-                fontWeight: '700',
-              }}>
-              Income
-            </Text>
-            <Text
-              style={{
-                fontFamily: 'Lato-Medium',
-                fontSize: 32,
-                color: '#fff',
-                fontWeight: '700',
-              }}>
-              $ 32
-            </Text>
-
-            <Text
-              style={{
-                marginTop: 67,
-                color: '#fff',
-                fontFamily: 'Lato-Regular',
-                fontSize: 18,
-                fontWeight: '700',
-              }}>
-              4234 **** **** 6533
-            </Text>
-          </View>
-
-          <View
-            style={{
-              alignItems: 'flex-end',
-              width: '30%',
-            }}>
-            <Text style={{fontSize: 18, color: '#fff', fontWeight: '700'}}>
-              NGN
-            </Text>
-            <View style={{flex: 1}}>
-              <Button
-                rounded
-                light
-                style={{
-                  padding: 10,
-                  marginTop: 32,
-                  borderWidth: 3,
-                  borderColor: '#fff',
-                  backgroundColor: '#E10C62',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  navigation.navigate('Add');
-                }}>
-                <Text style={{color: '#fff', fontWeight: '700', fontSize: 15}}>
-                  Add
-                </Text>
-              </Button>
-
-              <Text
-                style={{
-                  marginTop: 17,
-                  color: '#fff',
-                  fontSize: 15,
-                  fontWeight: '700',
-                }}>
-                  Expense
-              </Text>
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 18,
-                  fontWeight: '700',
-                }}>
-                -$ 10
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
+        <Card navigation={navigation} />
       </Animated.View>
+
+      <View style={{flex: 1, marginTop: -150}}>
+        {transactions.length > 0 ? (
+          <FlatList
+            data={transactions}
+            renderItem={({item}) => (
+              <Item title={item.title} price={item.price} id={item.id} />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        ) : (
+          <Empty />
+        )}
+      </View>
     </Container>
   );
 };
