@@ -19,13 +19,13 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} options={{
+            name="Home" 
+            component={HomeScreen} options={{
             title: 'Expense tracker'
           }} />
           <Stack.Screen 
-          name="Add" 
-          component={AddTransaction} options={{
+            name="Add" 
+            component={AddTransaction} options={{
             title: 'Add expense'
           }} />
         </Stack.Navigator>

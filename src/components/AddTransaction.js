@@ -4,7 +4,7 @@ import {Container, Button, Content, Form, Item, Input} from 'native-base';
 import {addTransaction} from '../store/actions/transactionActions';
 import {useDispatch} from 'react-redux';
 
-const AddTransaction = () => {
+const AddTransaction = ({navigation}) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
@@ -23,6 +23,8 @@ const AddTransaction = () => {
     };
 
     dispatch(addTransaction({...newTransaction}));
+    
+    navigation.navigate('Home');
   };
 
   return (
