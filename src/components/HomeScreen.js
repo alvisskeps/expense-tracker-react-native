@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
-import {Container, CheckBox, Body, Right, ListItem} from 'native-base';
+import {View, Text, FlatList} from 'react-native';
+import {Container, Body, Right, ListItem, Button} from 'native-base';
 import Animated from 'react-native-reanimated';
 import Card from './parts/Card';
 import Empty from './parts/Empty';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import {useSelector, useDispatch} from 'react-redux';
 import {deleteTransaction} from '../store/actions/transactionActions';
 
@@ -18,12 +20,22 @@ function Item({title, id, price}) {
         paddingVertical: 15,
       }}>
       <ListItem>
-        <CheckBox
+        <Button
+          light
+          style={{
+            color: '#fff',
+            borderColor: '#fff',
+            backgroundColor: '#fff',
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingHorizontal: 10,
+            marginRight: 8
+          }}
           onPress={() => {
             dispatch(deleteTransaction(id));
-          }}
-          color="#ff4500"
-        />
+          }}>
+          <FontAwesomeIcon icon={ faTrash } />
+        </Button>
 
         <Body>
           <Text style={{fontSize: 17, fontWeight: '700', marginLeft: 10}}>
